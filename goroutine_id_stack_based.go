@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+// ------------------------------------------------- --------------------------------------------------------------------
+
 // GetGoroutineID 获取当前协程的ID
 func GetGoroutineID() (int, error) {
 	id, err := strconv.Atoi(GetGoroutineIDAsString())
@@ -23,3 +25,5 @@ func GetGoroutineIDAsString() string {
 	idField := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))[0]
 	return idField
 }
+
+// ------------------------------------------------- --------------------------------------------------------------------
