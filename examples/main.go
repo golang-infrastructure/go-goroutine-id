@@ -16,7 +16,7 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		goroutineId, err = goroutine_id.GetGoroutineID()
+		goroutineId, err = goroutine_id.GetGoroutineId()
 		if err != nil {
 			panic(err)
 		}
@@ -27,7 +27,7 @@ func main() {
 	// Goroutine ID: 6
 
 	// Look at the id of the main coroutine
-	goroutineId, err = goroutine_id.GetGoroutineID()
+	goroutineId, err = goroutine_id.GetGoroutineId()
 	if err != nil {
 		panic(err)
 	}

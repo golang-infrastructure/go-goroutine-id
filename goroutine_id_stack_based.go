@@ -9,21 +9,30 @@ import (
 
 // ------------------------------------------------- --------------------------------------------------------------------
 
-// GetGoroutineID 获取当前协程的ID
-func GetGoroutineID() (int, error) {
-	id, err := strconv.Atoi(GetGoroutineIDAsString())
-	if err != nil {
-		return 0, fmt.Errorf("cannot get goroutine id: %v", err)
+// GetGoroutineId 获取当前协程的id
+func GetGoroutineId() (int, error) {
+
+	goroutineIdString := GetGoroutineIdAsString()
+	if goroutineIdString == "" {
+		return 0, ErrGetGoroutineIdFailed
 	}
-	return id, nil
+
+	goroutineId, err := strconv.Atoi(goroutineIdString)
+	if err != nil {
+		return 0, fmt.Errorf("goroutine goroutineId parse int error, value = %s, msg = %s", goroutineIdString, err.Error())
+	}
+	return goroutineId, nil
 }
 
-// GetGoroutineIDAsString 获取当前协程的ID，以字符串的形式返回
-func GetGoroutineIDAsString() string {
+// GetGoroutineIdAsString 获取当前协程的id，以字符串的形式返回
+func GetGoroutineIdAsString() string {
 	var buf [64]byte
 	n := runtime.Stack(buf[:], false)
-	idField := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))[0]
-	return idField
+	fields := strings.Fields(strings.TrimPrefix(string(buf[:n]), "goroutine "))
+	if len(fields) < 1 {
+		return ""
+	}
+	return fields[0]
 }
 
 // ------------------------------------------------- --------------------------------------------------------------------
